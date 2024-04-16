@@ -1,11 +1,17 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, fireEvent } from '@testing-library/react';
+import Login from './Login';
 
-test('renders learn react link', () => {
-  render(<App />);
-  // Procure pelo texto diretamente dentro do componente, sem expressão regular
-  const linkElement = screen.getByText('learn react', { exact: false });
-  // Use expect.toBeInTheDocument para verificar se o elemento está presente no DOM
-  expect(linkElement).toBeInTheDocument();
+test('exibe mensagem de sucesso ao fazer login com credenciais corretas', () => {
+  render(<Login />);
+  
+  // Insere o e-mail e a senha corretos
+  fireEvent.change(screen.getByPlaceholderText('E-mail'), { target: { value: 'maria.gabriele@pucpr.br' } });
+  fireEvent.change(screen.getByPlaceholderText('Senha'), { target: { value: '246810' } });
+
+  // Clica no botão de login
+  fireEvent.click(screen.getByText('Acessar'));
+
+  // Verifica se a mensagem de sucesso é exibida
+  expect(screen.getByText('Acessado com Sucesso!')).toBeInTheDocument();
 });
 
