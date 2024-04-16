@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Login from './Login';
+import App from './App.js';
 
 test('exibe mensagem de sucesso ao fazer login com credenciais corretas', () => {
-  render(<Login />);
+  render(<App />);
   
   // Insere o e-mail e a senha corretos
   fireEvent.change(screen.getByPlaceholderText('E-mail'), { target: { value: 'maria.gabriele@pucpr.br' } });
