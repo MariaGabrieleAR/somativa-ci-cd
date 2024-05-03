@@ -18,19 +18,15 @@ jobs:
           npm install
           npm run build
 
-  
   test-job:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      # Adiciona uma etapa para instalar as dependências do projeto
       - name: Install dependencies
         run: npm install  # ou yarn install
 
-      # Adiciona uma etapa para executar os testes
       - name: Run tests
         run: npm test
 
@@ -40,12 +36,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       
-      # Adicione uma etapa para instalar as dependências necessárias para a análise SAST
       - name: Install SAST dependencies
         run: |
           # Comando para instalar ferramentas SAST, se necessário
 
-      # Adicione uma etapa para executar a análise SAST
       - name: Run SAST Scan
         run: |
           # Comando para executar a análise SAST, substitua pelo comando específico da ferramenta que você está usando
@@ -76,7 +70,7 @@ jobs:
       - name: Test Docker image
         run: |
           # Executa um contêiner a partir da imagem Docker
-          docker run -d --name test-container -p 3000:3000 minha-aplicacao
+          docker run -d -p 3000:3000 minha-aplicacao
           sleep 10  # Aguarda alguns segundos para que a aplicação inicialize completamente
           # Realiza uma solicitação HTTP para a aplicação em execução
           response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000)
