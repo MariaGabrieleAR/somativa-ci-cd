@@ -5,6 +5,7 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
+    types: [opened]
 
 jobs:
   build-job:
@@ -82,13 +83,25 @@ jobs:
             exit 1
           fi
 
-  deploy-job:
+  notify-discord:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'opened'
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Extract PR information
+        id: pr
+        uses: gr2m/get-json-paths-action@v3
+        with:
+          json: ${{ toJson(github.event.pull_request) }}
+          paths: |
+            number
+            title
+            html_url
+            user.login
 
-      - name: Deploy
+      - name: Notify Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
-          # Comando para deploy
-          echo "Finalizou"
+          curl -X POST -H "Content-Type: application/json" -d '{
+            "content": "New PR opened!\nTitle: ${{ steps.pr.outputs.title }}\nNumber: ${{ steps.pr.outputs.number }}\nBy: ${{ steps.pr.outputs.user.login }}\nURL: ${{ steps.pr.outputs.html_url }}"
+          }' $DISCORD_WEBHOOK
