@@ -70,10 +70,10 @@ jobs:
       - name: Test Docker image
         run: |
           # Executa um contêiner a partir da imagem Docker
-          docker run gaabimgb/minha-aplicacao:latest
+          docker run -d -p 3000:3000 gaabimgb/minha-aplicacao:latest
           sleep 10  # Aguarda alguns segundos para que a aplicação inicialize completamente
           # Realiza uma solicitação HTTP para a aplicação em execução
-          response=$(curl -s -o /dev/null -w "%{http_code}" gaabimgb/minha-aplicacao:latest
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000)
           # Verifica se a resposta é 200 (OK)
           if [ $response -eq 200 ]; then
             echo "Teste passou: Aplicação está respondendo corretamente."
