@@ -89,7 +89,7 @@ jobs:
     steps:
       - name: Extract PR information
         id: pr
-        uses: gr2m/get-json-paths-action@
+        uses: gr2m/get-json-paths-action@main
         with:
           json: ${{ toJson(github.event.pull_request) }}
           paths: |
