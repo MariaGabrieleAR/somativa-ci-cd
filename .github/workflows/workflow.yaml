@@ -105,3 +105,5 @@ jobs:
           curl -X POST -H "Content-Type: application/json" -d '{
             "content": "New PR opened!\nTitle: ${{ steps.pr.outputs.title }}\nNumber: ${{ steps.pr.outputs.number }}\nBy: ${{ steps.pr.outputs.user.login }}\nURL: ${{ steps.pr.outputs.html_url }}"
           }' $DISCORD_WEBHOOK
+
+          
