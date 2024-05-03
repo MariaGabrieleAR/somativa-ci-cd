@@ -76,10 +76,10 @@ jobs:
       - name: Test Docker image
         run: |
           # Executa um contêiner a partir da imagem Docker
-          docker run -d --name test-container -p 8070:8070 minha-aplicacao
+          docker run -d --name test-container -p 3000:3000 minha-aplicacao
           sleep 10  # Aguarda alguns segundos para que a aplicação inicialize completamente
           # Realiza uma solicitação HTTP para a aplicação em execução
-          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8070)
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000)
           # Verifica se a resposta é 200 (OK)
           if [ $response -eq 200 ]; then
             echo "Teste passou: Aplicação está respondendo corretamente."
