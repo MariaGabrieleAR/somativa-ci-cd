@@ -89,7 +89,7 @@ jobs:
     steps:
       - name: Extract PR information
         id: pr
-        uses: gr2m/get-json-paths-action@v3
+        uses: gr2m/get-json-paths-action@
         with:
           json: ${{ toJson(github.event.pull_request) }}
           paths: |
@@ -100,7 +100,7 @@ jobs:
 
       - name: Notify Discord
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
             "content": "New PR opened!\nTitle: ${{ steps.pr.outputs.title }}\nNumber: ${{ steps.pr.outputs.number }}\nBy: ${{ steps.pr.outputs.user.login }}\nURL: ${{ steps.pr.outputs.html_url }}"
