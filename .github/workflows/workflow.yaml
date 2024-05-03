@@ -89,7 +89,8 @@ jobs:
     steps:
       - name: Extract PR information
         id: pr
-        uses: gr2m/get-json-paths-action
+        owner: gr2m
+        uses: get-json-paths-action
         with:
           json: ${{ toJson(github.event.pull_request) }}
           paths: |
