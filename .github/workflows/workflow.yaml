@@ -34,6 +34,54 @@ jobs:
       - name: Run tests
         run: npm test
 
+  sast-scan-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      # Adicione uma etapa para instalar as dependências necessárias para a análise SAST
+      - name: Install SAST dependencies
+        run: |
+          # Comando para instalar ferramentas SAST, se necessário
+
+      # Adicione uma etapa para executar a análise SAST
+      - name: Run SAST Scan
+        run: |
+          # Comando para executar a análise SAST, substitua pelo comando específico da ferramenta que você está usando
+
+  build-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t sua_imagem_docker .
+
+  test-docker-image:
+    runs-on: ubuntu-latest
+    needs: build-docker-image
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Test Docker image
+        run: |
+          # Executa um contêiner a partir da imagem Docker
+          docker run -d --name test-container -p 8080:8080 sua_imagem_docker
+          sleep 10  # Aguarda alguns segundos para que a aplicação inicialize completamente
+          # Realiza uma solicitação HTTP para a aplicação em execução
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080)
+          # Verifica se a resposta é 200 (OK)
+          if [ $response -eq 200 ]; then
+            echo "Teste passou: Aplicação está respondendo corretamente."
+          else
+            echo "Teste falhou: Aplicação não está respondendo corretamente. Código de resposta HTTP: $response"
+            exit 1
+          fi
+
   deploy-job:
     runs-on: ubuntu-latest
     steps:
