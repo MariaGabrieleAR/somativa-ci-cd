@@ -58,7 +58,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t sua_imagem_docker .
+          docker build -t minha-aplicacao .
 
   test-docker-image:
     runs-on: ubuntu-latest
@@ -76,10 +76,10 @@ jobs:
       - name: Test Docker image
         run: |
           # Executa um contêiner a partir da imagem Docker
-          docker run -d --name test-container -p 8080:8080 sua_imagem_docker
+          docker run -d --name test-container -p 8070:8070 sua_imagem_docker
           sleep 10  # Aguarda alguns segundos para que a aplicação inicialize completamente
           # Realiza uma solicitação HTTP para a aplicação em execução
-          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080)
+          response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8070)
           # Verifica se a resposta é 200 (OK)
           if [ $response -eq 200 ]; then
             echo "Teste passou: Aplicação está respondendo corretamente."
