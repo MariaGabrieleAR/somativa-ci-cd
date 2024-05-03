@@ -87,21 +87,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.action == 'opened'
     steps:
-      - name: Extract PR information
-        id: pr
-        uses: gr2m/get-json-paths-action@
-        with:
-          json: ${{ toJson(github.event.pull_request) }}
-          paths: |
-            number
-            title
-            html_url
-            user.login
-
       - name: Notify Discord
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{
-            "content": "New PR opened!\nTitle: ${{ steps.pr.outputs.title }}\nNumber: ${{ steps.pr.outputs.number }}\nBy: ${{ steps.pr.outputs.user.login }}\nURL: ${{ steps.pr.outputs.html_url }}"
+            "content": "New PR opened!\nTitle: ${{ github.event.pull_request.title }}\nNumber: ${{ github.event.pull_request.number }}\nBy: ${{ github.event.pull_request.user.login }}\nURL: ${{ github.event.pull_request.html_url }}"
           }' $DISCORD_WEBHOOK
