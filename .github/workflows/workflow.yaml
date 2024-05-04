@@ -36,14 +36,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
-      - name: Install SAST dependencies
-        run: |
-          # Comando para instalar ferramentas SAST, se necessário
 
-      - name: Run SAST Scan
-        run: |
-          # Comando para executar a análise SAST, substitua pelo comando específico da ferramenta que você está usando
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install ESLint
+        run: npm install eslint --save-dev
+
+      - name: Run ESLint Scan
+        run: npx eslint .
 
   build-docker-image:
     runs-on: ubuntu-latest
@@ -71,7 +74,7 @@ jobs:
       - name: Test Docker image
         run: |
           # Executa um contêiner a partir da imagem Docker
-          docker run -d -p 3000:3000 gaabimgb/minha-aplicacao:latest
+          docker run -d -p 3000:3000 minha-aplicacao:latest
           sleep 10  # Aguarda alguns segundos para que a aplicação inicialize completamente
           # Realiza uma solicitação HTTP para a aplicação em execução
           response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000)
