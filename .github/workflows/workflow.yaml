@@ -31,7 +31,7 @@ jobs:
       - name: Run tests
         run: npm test
 
-  sast-scan-job:  # Corrigido para estar no mesmo nível de indentação que as outras jobs
+  sast-scan-job:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -39,8 +39,6 @@ jobs:
 
       - name: Install Node.js
         uses: actions/setup-node@v2
-        with:
-          node-version: '14'
 
       - name: Install ESLint
         run: npm install eslint --save-dev
