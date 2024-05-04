@@ -95,3 +95,5 @@ jobs:
           curl -X POST -H "Content-Type: application/json" -d '{
             "content": "New PR opened!\nTitle: ${{ github.event.pull_request.title }}\nNumber: ${{ github.event.pull_request.number }}\nBy: ${{ github.event.pull_request.user.login }}\nURL: ${{ github.event.pull_request.html_url }}"
           }' $DISCORD_WEBHOOK
+
+          
